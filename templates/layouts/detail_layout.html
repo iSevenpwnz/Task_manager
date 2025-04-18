@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{% block detail_title %}Детали{% endblock %}{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <header class="mb-4">
+      <div class="d-flex justify-content-between align-items-center">
+        <h1>{% block detail_heading %}Детали{% endblock %}</h1>
+
+        <div class="actions">
+          {% block detail_actions %}{% endblock %}
+        </div>
+      </div>
+
+      {% block breadcrumbs %}
+        {% include "components/breadcrumbs.html" %}
+      {% endblock %}
+    </header>
+    
+    <section class="detail-content">
+      {% block detail_content %}
+        <div class="alert alert-info">
+          Нет данных для отображения.
+        </div>
+      {% endblock %}
+    </section>
+    
+    <section class="related-content mt-5">
+      {% block related_content %}{% endblock %}
+    </section>
+    
+    <div class="mt-4">
+      {% block back_button %}
+        <a href="javascript:history.back()" class="btn btn-secondary">
+          <i class="fas fa-arrow-left"></i> Назад
+        </a>
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}

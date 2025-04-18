@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}{% block form_title %}Форма{% endblock %}{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <header class="mb-4">
+      <div class="d-flex justify-content-between align-items-center">
+        <h1>{% block form_heading %}Форма{% endblock %}</h1>
+
+        <div class="actions">
+          {% block form_actions %}{% endblock %}
+        </div>
+      </div>
+
+      {% block breadcrumbs %}
+        {% include "components/breadcrumbs.html" %}
+      {% endblock %}
+    </header>
+    
+    <section class="form-content">
+      {% if form.errors %}
+        <div class="alert alert-danger">
+          <h4 class="alert-heading">Ошибки в форме:</h4>
+          <ul>
+            {% for field, errors in form.errors.items %}
+              {% for error in errors %}
+                <li>{{ field }}: {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      {% block form_content %}
+        <form method="post" enctype="multipart/form-data" class="card">
+          <div class="card-body">
+            {% csrf_token %}
+
+            {% block form_fields %}
+              {{ form.as_p }}
+            {% endblock %}
+          </div>
+
+          <div class="card-footer">
+            <div class="d-flex">
+              <button type="submit" class="btn btn-primary">
+                {% block submit_button_text %}Сохранить{% endblock %}
+              </button>
+
+              <a href="javascript:history.back()" class="btn btn-secondary ms-2">
+                Отмена
+              </a>
+            </div>
+          </div>
+        </form>
+      {% endblock %}
+    </section>
+  </div>
+{% endblock %}

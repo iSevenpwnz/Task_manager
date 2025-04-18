@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Видалення команди - Менеджер завдань{% endblock %}
+
+{% block page_title %}Видалення команди{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-danger text-white">
+          <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Підтвердження видалення</h5>
+        </div>
+        <div class="card-body">
+          <h5 class="mb-3">Ви впевнені, що хочете видалити команду "{{ team.name }}"?</h5>
+
+          <div class="alert alert-warning">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <strong>Увага!</strong> Це призведе до:
+            <ul class="mb-0 mt-2">
+              <li>Видалення зв'язків між учасниками і командою</li>
+              <li>Видалення зв'язків між проектами і командою</li>
+            </ul>
+          </div>
+
+          {% if team.members.exists %}
+            <div class="mb-3 mt-3">
+              <h6>Учасники команди ({{ team.members.count }}):</h6>
+              <ul>
+                {% for member in team.members.all %}
+                  <li>{{ member.username }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          {% if team.projects.exists %}
+            <div class="mb-3">
+              <h6>Проекти команди ({{ team.projects.count }}):</h6>
+              <ul>
+                {% for project in team.projects.all %}
+                  <li>{{ project.name }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          <form method="post">
+            {% csrf_token %}
+
+            <div class="d-flex justify-content-between mt-4">
+              <a href="{% url 'team_detail' team.pk %}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Скасувати
+              </a>
+              <button type="submit" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Так, видалити
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %} 

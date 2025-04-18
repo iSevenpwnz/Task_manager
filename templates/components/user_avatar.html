@@ -1,0 +1,28 @@
+{% if size == 'sm' %}
+  <span class="user-avatar user-avatar-sm d-inline-block me-1">
+            {% if user.profile.avatar %}
+              <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" class="rounded-circle"
+                   style="width: 100%; height: 100%;">
+            {% else %}
+              {{ user.username|make_list|first|upper }}
+            {% endif %}
+        </span>
+{% elif size == 'lg' %}
+  <span class="user-avatar user-avatar-lg d-inline-block me-2">
+            {% if user.profile.avatar %}
+              <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" class="rounded-circle"
+                   style="width: 100%; height: 100%;">
+            {% else %}
+              {{ user.username|make_list|first|upper }}
+            {% endif %}
+        </span>
+{% else %}
+  <span class="user-avatar d-inline-block me-2">
+            {% if user.profile.avatar %}
+              <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" class="rounded-circle"
+                   style="width: 100%; height: 100%;">
+            {% else %}
+              {{ user.username|make_list|first|upper }}
+            {% endif %}
+        </span>
+{% endif %}

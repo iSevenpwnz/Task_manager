@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Видалення проекту - Менеджер завдань{% endblock %}
+
+{% block page_title %}Видалення проекту{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-danger text-white">
+          <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Підтвердження видалення</h5>
+        </div>
+        <div class="card-body">
+          <h5 class="mb-3">Ви впевнені, що хочете видалити проект "{{ project.name }}"?</h5>
+
+          <div class="alert alert-warning">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <strong>Увага!</strong> Це призведе до видалення всіх пов'язаних з проектом даних.
+            Завдання, пов'язані з цим проектом, будуть відокремлені від проекту.
+          </div>
+
+          <form method="post">
+            {% csrf_token %}
+
+            <div class="d-flex justify-content-between mt-4">
+              <a href="{% url 'project_detail' project.pk %}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Скасувати
+              </a>
+              <button type="submit" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Так, видалити
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %} 

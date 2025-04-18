@@ -1,0 +1,39 @@
+{% if tasks %}
+  <div class="list-group">
+    {% for task in tasks %}
+      <a href="{% url 'task_detail' task.pk %}" class="list-group-item list-group-item-action">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h5 class="mb-1">{{ task.title }}</h5>
+            {% if task.description %}
+              <p class="mb-1">{{ task.description|truncatechars:100 }}</p>
+            {% endif %}
+          </div>
+          <div class="text-end">
+            {% if task.is_overdue %}
+              <span class="badge bg-danger">Прострочено</span>
+            {% elif task.status == 'done' %}
+              <span class="badge bg-success">Виконано</span>
+            {% elif task.status == 'in_progress' %}
+              <span class="badge bg-info">В процесі</span>
+            {% else %}
+              <span class="badge bg-warning">До виконання</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="d-flex justify-content-between mt-2">
+          <small>{% if task.assigned_to %}Виконавець: {{ task.assigned_to.username }}{% else %}Не
+            призначено{% endif %}</small>
+          {% if task.deadline %}
+            <small>Термін: {{ task.deadline|date:"d.m.Y" }}</small>
+          {% endif %}
+        </div>
+        {% if task.project %}
+          <small><i class="fas fa-folder me-1"></i>{{ task.project.name }}</small>
+        {% endif %}
+      </a>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="text-muted">Немає завдань для відображення.</p>
+{% endif %} 

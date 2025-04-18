@@ -1,0 +1,34 @@
+<div class="card mb-4 filter-form">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">{{ filter_title|default:"Фильтры" }}</h5>
+    <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse"
+            data-bs-target="#filterCollapse" aria-expanded="false">
+      <i class="fas fa-filter"></i> Показать/скрыть
+    </button>
+  </div>
+
+  <div class="collapse {% if request.GET %}show{% endif %}" id="filterCollapse">
+    <div class="card-body">
+      <form method="get" class="row g-3">
+        {% for field in filter_form %}
+          <div class="col-md-{% if field.name == 'tags' or field.name == 'description' %}12{% else %}4{% endif %}">
+            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+            {{ field }}
+          </div>
+        {% endfor %}
+
+        <div class="col-12 mt-3">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i> Применить фильтры
+          </button>
+
+          {% if show_reset|default:True %}
+            <a href="{{ request.path }}" class="btn btn-outline-secondary ms-2">
+              <i class="fas fa-undo"></i> Сбросить
+            </a>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

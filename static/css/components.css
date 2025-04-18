@@ -1,0 +1,186 @@
+
+.progress-slim {
+    height: 8px;
+}
+
+.progress-default {
+    height: 20px;
+}
+
+.progress-large {
+    height: 30px;
+}
+
+
+.scrollable-container {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+
+.user-avatar, .avatar-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+}
+
+.user-avatar-sm {
+    width: 24px;
+    height: 24px;
+    font-size: 0.8rem;
+}
+
+.user-avatar-lg {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+}
+
+.tag-size-xs {
+    font-size: 0.9rem;
+}
+
+.tag-size-sm {
+    font-size: 1.1rem;
+}
+
+.tag-size-md {
+    font-size: 1.3rem;
+}
+
+.tag-size-lg {
+    font-size: 1.5rem;
+}
+
+
+.tag {
+    font-size: 0.75rem;
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 3px 8px;
+    border-radius: 12px;
+    margin-right: 5px;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+
+.task-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+}
+
+.task-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.task-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-card-body {
+    padding: 1rem;
+}
+
+.task-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+}
+
+
+.status-badge {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    border-radius: 0.25rem;
+}
+
+.status-todo {
+    background-color: #ffd166;
+    color: #000;
+}
+
+.status-in-progress {
+    background-color: #118ab2;
+    color: #fff;
+}
+
+.status-done {
+    background-color: #06d6a0;
+    color: #fff;
+}
+
+.status-overdue {
+    background-color: #ef476f;
+    color: #fff;
+}
+
+.status-today {
+    background-color: var(--warning);
+    color: #212529;
+}
+
+.status-upcoming {
+    background-color: var(--info);
+    color: white;
+}
+
+/* Корисні утиліти */
+.bordered-list-item {
+    border-bottom: 1px solid #eee;
+    padding: 0.75rem 0;
+}
+
+.dashboard-stat-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-stat-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+
+.hover-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+    border-radius: 10px;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #4361ee, #3f37c9);
+}
+
+.bg-gradient-light {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+}
+
+.member-badge, .team-badge, .project-badge {
+    transition: transform 0.2s;
+}
+
+.member-badge:hover, .team-badge:hover, .project-badge:hover {
+    transform: scale(1.05);
+}
+
+
+.task-progress {
+    font-size: 0.8rem;
+    color: #6c757d;
+}

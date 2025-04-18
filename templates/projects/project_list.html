@@ -1,0 +1,7 @@
+<div class="project-actions d-flex">
+  <a href="{% url 'task_create' %}?project={{ project.pk }}" class="btn btn-primary btn-sm">
+    <i class="fas fa-plus"></i> Додати задачу
+  </a>
+  <a href="{% url 'project_update' project.pk %}" class="btn btn-outline-primary btn-sm ms-2">
+    <i class="fas fa-edit"></i>
+  </a>

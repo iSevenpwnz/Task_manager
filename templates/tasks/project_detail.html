@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.name }} - Менеджер завдань{% endblock %}
+
+{% block page_title %}{{ project.name }}{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Інформація про проект</h5>
+        </div>
+        <div class="card-body">
+          <div class="mb-4">
+            <h6>Опис:</h6>
+            <p>{{ project.description|linebreaks }}</p>
+          </div>
+
+          <div class="mb-4">
+            <h6>Команди проекту:</h6>
+            {% if project.teams.all %}
+              <ul class="list-group">
+                {% for team in project.teams.all %}
+                  <li class="list-group-item">
+                    <a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a>
+                    <span class="text-muted">({{ team.members.count }} учасників)</span>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="text-muted">Немає команд, які працюють над цим проектом.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5>Завдання проекту</h5>
+            <a href="{% url 'task_create' %}?project={{ project.pk }}" class="btn btn-success">
+              + Нове завдання
+            </a>
+          </div>
+        </div>
+        <div class="card-body">
+          {% if tasks %}
+            <ul class="nav nav-tabs mb-3">
+              <li class="nav-item">
+                <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button">
+                  Всі ({{ tasks.count }})
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" id="todo-tab" data-bs-toggle="tab" data-bs-target="#todo" type="button">
+                  До виконання ({{ todo_count }})
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" id="in-progress-tab" data-bs-toggle="tab" data-bs-target="#in-progress"
+                        type="button">
+                  В процесі ({{ in_progress_count }})
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" id="done-tab" data-bs-toggle="tab" data-bs-target="#done" type="button">
+                  Виконано ({{ done_count }})
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="all">
+                {% include "components/task_list_items.html" with tasks=tasks %}
+              </div>
+              <div class="tab-pane fade" id="todo">
+                {% include "components/task_list_items.html" with tasks=tasks_todo %}
+              </div>
+              <div class="tab-pane fade" id="in-progress">
+                {% include "components/task_list_items.html" with tasks=tasks_in_progress %}
+              </div>
+              <div class="tab-pane fade" id="done">
+                {% include "components/task_list_items.html" with tasks=tasks_done %}
+              </div>
+            </div>
+          {% else %}
+            <div class="alert alert-info">
+              Немає завдань для цього проекту.
+              <a href="{% url 'task_create' %}?project={{ project.pk }}">Створити завдання</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Дії</h5>
+        </div>
+        <div class="card-body">
+          <div>
+            <a href="{% url 'project_list' %}" class="btn btn-outline-primary mb-2">
+              Назад до списку проектів
+            </a>
+            <a href="{% url 'task_create' %}?project={{ project.pk }}" class="btn btn-success mb-2">
+              Створити завдання
+            </a>
+            <a href="{% url 'project_update' project.pk %}" class="btn btn-outline-warning mb-2">
+              <i class="fas fa-edit"></i> Редагувати проект
+            </a>
+            <a href="{% url 'project_delete' project.pk %}" class="btn btn-outline-danger mb-2">
+              <i class="fas fa-trash-alt"></i> Видалити проект
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Статистика проекту</h5>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <h6>Завдання за статусом:</h6>
+            {% with total=tasks_count %}
+              {% if total > 0 %}
+                <p>До виконання: {{ todo_count }}</p>
+                <p>В процесі: {{ in_progress_count }}</p>
+                <p>Виконано: {{ done_count }}</p>
+              {% else %}
+                <p class="text-muted">Немає завдань для відображення статистики.</p>
+              {% endif %}
+            {% endwith %}
+          </div>
+
+          <div class="mb-3">
+            <h6>Виконавці:</h6>
+            <p>
+              {% for task in tasks %}
+                {% if task.assigned_to %}
+                  <span class="badge bg-secondary me-1 mb-1">{{ task.assigned_to.username }}</span>
+                {% endif %}
+              {% endfor %}
+            </p>
+          </div>
+
+          <div>
+            <h6>Теги проекту:</h6>
+            <p>
+              {% for task in tasks %}
+                {% for tag in task.tags.all %}
+                  <span class="badge bg-secondary me-1 mb-1">{{ tag.name }}</span>
+                {% endfor %}
+              {% endfor %}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %} 

@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+
+{% block title %}Мої завдання - Менеджер завдань{% endblock %}
+
+{% block page_title %}Мої завдання{% endblock %}
+
+{% block content %}
+  <div class="mb-4">
+    <a href="{% url 'task_create' %}" class="btn btn-success">
+      <i class="fas fa-plus"></i> Нове завдання
+    </a>
+  </div>
+
+  {% if overdue_tasks %}
+    <div class="card mb-4 border-danger">
+      <div class="card-header bg-danger text-white">
+        <h5 class="card-title mb-0">
+          <i class="fas fa-exclamation-triangle"></i> Прострочені завдання ({{ overdue_tasks|length }})
+        </h5>
+      </div>
+      <div class="card-body">
+        {% for task in overdue_tasks %}
+          <div class="task-item overdue mb-2">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="mb-1">
+                <a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a>
+              </h5>
+              <div>
+                            <span
+                                class="badge {% if task.status == 'to_do' %}bg-warning{% elif task.status == 'in_progress' %}bg-info{% endif %}">
+                                {{ task.get_status_display }}
+                            </span>
+                <span class="badge bg-danger">
+                                Дедлайн: {{ task.deadline|date:"d.m.Y" }}
+                            </span>
+              </div>
+            </div>
+            <p class="mb-1">{{ task.description|truncatechars:100 }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                {% if task.project %}
+                  <span class="badge bg-primary">
+                                    <i class="fas fa-project-diagram"></i> {{ task.project.name }}
+                                </span>
+                {% endif %}
+
+                {% for tag in task.tags.all %}
+                  <span class="badge badge-tag">
+                                    <i class="fas fa-tag"></i> {{ tag.name }}
+                                </span>
+                {% endfor %}
+              </div>
+              <div>
+                <a href="{% url 'task_update' task.pk %}" class="btn btn-sm btn-outline-secondary">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <a href="{% url 'task_complete' task.pk %}" class="btn btn-sm btn-success">
+                  <i class="fas fa-check"></i> Виконано
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="card-footer bg-transparent border-0 py-2 text-end">
+        <a href="{% url 'task_list' %}?overdue=true" class="text-danger">Переглянути всі</a>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="card mb-4 border-warning">
+    <div class="card-header bg-warning text-dark">
+      <h5 class="card-title mb-0">
+        <i class="fas fa-clock"></i> Завдання до виконання ({{ todo_tasks|length }})
+      </h5>
+    </div>
+    <div class="card-body">
+      {% if todo_tasks %}
+        {% for task in todo_tasks %}
+          <div class="task-item to-do mb-2">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="mb-1">
+                <a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a>
+              </h5>
+              <div>
+                {% if task.deadline %}
+                  <span class="badge bg-secondary">
+                                    Дедлайн: {{ task.deadline|date:"d.m.Y" }}
+                                </span>
+                {% endif %}
+              </div>
+            </div>
+            <p class="mb-1">{{ task.description|truncatechars:100 }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                {% if task.project %}
+                  <span class="badge bg-primary">
+                                    <i class="fas fa-project-diagram"></i> {{ task.project.name }}
+                                </span>
+                {% endif %}
+
+                {% for tag in task.tags.all %}
+                  <span class="badge badge-tag">
+                                    <i class="fas fa-tag"></i> {{ tag.name }}
+                                </span>
+                {% endfor %}
+              </div>
+              <div>
+                <a href="{% url 'task_update' task.pk %}" class="btn btn-sm btn-outline-secondary">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <a href="{% url 'task_update' task.pk %}?set_status=in_progress" class="btn btn-sm btn-info">
+                  <i class="fas fa-play"></i> Почати виконання
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-muted">Немає завдань до виконання</p>
+      {% endif %}
+    </div>
+    <div class="card-footer bg-transparent border-0 py-2 text-end">
+      <a href="{% url 'task_list' %}?status=to_do" class="text-warning">Переглянути всі</a>
+    </div>
+  </div>
+
+  <div class="card mb-4 border-info">
+    <div class="card-header bg-info text-white">
+      <h5 class="card-title mb-0">
+        <i class="fas fa-spinner"></i> Завдання в процесі ({{ in_progress_tasks|length }})
+      </h5>
+    </div>
+    <div class="card-body">
+      {% if in_progress_tasks %}
+        {% for task in in_progress_tasks %}
+          <div class="task-item in-progress mb-2">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="mb-1">
+                <a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a>
+              </h5>
+              <div>
+                {% if task.deadline %}
+                  <span class="badge bg-secondary">
+                                    Дедлайн: {{ task.deadline|date:"d.m.Y" }}
+                                </span>
+                {% endif %}
+              </div>
+            </div>
+            <p class="mb-1">{{ task.description|truncatechars:100 }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                {% if task.project %}
+                  <span class="badge bg-primary">
+                                    <i class="fas fa-project-diagram"></i> {{ task.project.name }}
+                                </span>
+                {% endif %}
+
+                {% for tag in task.tags.all %}
+                  <span class="badge badge-tag">
+                                    <i class="fas fa-tag"></i> {{ tag.name }}
+                                </span>
+                {% endfor %}
+              </div>
+              <div>
+                <a href="{% url 'task_update' task.pk %}" class="btn btn-sm btn-outline-secondary">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <a href="{% url 'task_complete' task.pk %}" class="btn btn-sm btn-success">
+                  <i class="fas fa-check"></i> Виконано
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-muted">Немає завдань в процесі</p>
+      {% endif %}
+    </div>
+    <div class="card-footer bg-transparent border-0 py-2 text-end">
+      <a href="{% url 'task_list' %}?status=in_progress" class="text-info">Переглянути всі</a>
+    </div>
+  </div>
+
+  <div class="card mb-4 border-success">
+    <div class="card-header bg-success text-white">
+      <h5 class="card-title mb-0">
+        <i class="fas fa-check-circle"></i> Виконані завдання ({{ completed_tasks|length }})
+      </h5>
+    </div>
+    <div class="card-body">
+      {% if completed_tasks %}
+        {% for task in completed_tasks %}
+          <div class="task-item done mb-2">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="mb-1">
+                <a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a>
+              </h5>
+              <div>
+                            <span class="badge bg-light text-dark">
+                                Виконано: {{ task.updated_at|date:"d.m.Y" }}
+                            </span>
+              </div>
+            </div>
+            <p class="mb-1">{{ task.description|truncatechars:100 }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                {% if task.project %}
+                  <span class="badge bg-primary">
+                                    <i class="fas fa-project-diagram"></i> {{ task.project.name }}
+                                </span>
+                {% endif %}
+
+                {% for tag in task.tags.all %}
+                  <span class="badge badge-tag">
+                                    <i class="fas fa-tag"></i> {{ tag.name }}
+                                </span>
+                {% endfor %}
+              </div>
+              <div>
+                <a href="{% url 'task_detail' task.pk %}" class="btn btn-sm btn-outline-primary">
+                  <i class="fas fa-eye"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-muted">Немає виконаних завдань</p>
+      {% endif %}
+    </div>
+    <div class="card-footer bg-transparent border-0 py-2 text-end">
+      <a href="{% url 'task_list' %}?status=done" class="text-success">Переглянути всі</a>
+    </div>
+  </div>
+{% endblock %} 

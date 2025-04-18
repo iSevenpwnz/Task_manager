@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {% if form.instance.id %}
+    Редагувати завдання
+  {% else %}
+    Нове завдання
+  {% endif %}
+{% endblock %}
+
+{% block page_title %}
+  {% if form.instance.id %}
+    <h1>Редагувати завдання</h1>
+  {% else %}
+    <h1>Створити нове завдання</h1>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">
+            {% if form.instance.id %}
+              <i class="fas fa-edit me-2"></i>Редагування завдання
+            {% else %}
+              <i class="fas fa-plus-circle me-2"></i>Нове завдання
+            {% endif %}
+          </h5>
+        </div>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+
+            {% if form.errors %}
+              <div class="alert alert-danger mb-4">
+                <p class="mb-1"><i class="fas fa-exclamation-circle me-2"></i>Будь ласка, виправте наступні помилки:</p>
+                {% for error in form.non_field_errors %}
+                  <p class="mb-0">{{ error }}</p>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <div class="mb-3">
+              <label for="{{ form.title.id_for_label }}" class="form-label">Назва:</label>
+              {{ form.title }}
+              {% if form.title.errors %}
+                <div class="text-danger">
+                  {% for error in form.title.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="{{ form.description.id_for_label }}" class="form-label">Опис:</label>
+              {{ form.description }}
+              {% if form.description.errors %}
+                <div class="text-danger">
+                  {% for error in form.description.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="{{ form.status.id_for_label }}" class="form-label">Статус:</label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                  <div class="text-danger">
+                    {% for error in form.status.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="col-md-6">
+                <label for="{{ form.deadline.id_for_label }}" class="form-label">Термін виконання:</label>
+                {{ form.deadline }}
+                {% if form.deadline.errors %}
+                  <div class="text-danger">
+                    {% for error in form.deadline.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="{{ form.assigned_to.id_for_label }}" class="form-label">Виконавець:</label>
+                {{ form.assigned_to }}
+                {% if form.assigned_to.errors %}
+                  <div class="text-danger">
+                    {% for error in form.assigned_to.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="col-md-6">
+                <label for="{{ form.project.id_for_label }}" class="form-label">Проект:</label>
+                {{ form.project }}
+                {% if form.project.errors %}
+                  <div class="text-danger">
+                    {% for error in form.project.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="{{ form.tags.id_for_label }}" class="form-label">Теги:</label>
+              <div class="tag-checkbox-container">
+                {{ form.tags }}
+              </div>
+              {% if form.tags.errors %}
+                <div class="text-danger">
+                  {% for error in form.tags.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+              <div class="form-text text-muted">Виберіть теги для категоризації завдання</div>
+            </div>
+
+            <div class="d-flex justify-content-between border-top pt-3">
+              <a href="{% url 'task_list' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Повернутись
+              </a>
+              <button type="submit" class="btn btn-primary">
+                {% if form.instance.id %}
+                  <i class="fas fa-save me-1"></i> Зберегти зміни
+                {% else %}
+                  <i class="fas fa-plus-circle me-1"></i> Створити завдання
+                {% endif %}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_css %}
+  <style>
+      .tag-checkbox-container {
+          display: flex;
+          flex-wrap: wrap;
+          padding: 15px;
+          background-color: #f8f9fa;
+          border-radius: 8px;
+          border: 1px solid #dee2e6;
+          margin-bottom: 10px;
+      }
+
+      .tag-checkbox-list {
+          list-style: none;
+          padding: 0;
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          gap: 10px;
+          margin: 0;
+          width: 100%;
+      }
+
+      .tag-checkbox-list li {
+          display: flex;
+          align-items: center;
+          background-color: #ffffff;
+          padding: 8px 12px;
+          border-radius: 5px;
+          border: 1px solid #dee2e6;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+          transition: all 0.2s ease;
+      }
+
+      .tag-checkbox-list li:hover {
+          background-color: #e9ecef;
+          border-color: #ced4da;
+      }
+
+      .tag-checkbox-list li label {
+          margin-bottom: 0;
+          padding-left: 8px;
+          cursor: pointer;
+          flex-grow: 1;
+          font-size: 0.9rem;
+          display: flex;
+          align-items: center;
+      }
+
+      .tag-checkbox-list input[type="checkbox"] {
+          margin: 0;
+          width: 18px;
+          height: 18px;
+          cursor: pointer;
+      }
+
+      .tag-checkbox-list input[type="checkbox"]:checked + label {
+          font-weight: 600;
+          color: #0d6efd;
+      }
+  </style>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          // Исправление позиционирования чекбоксов для тегов
+          const checkboxes = document.querySelectorAll('.tag-checkbox-list input[type="checkbox"]');
+          checkboxes.forEach(function (checkbox) {
+              // Перемещаем чекбокс внутрь лейбла для лучшего позиционирования
+              const label = checkbox.nextElementSibling;
+              if (label && label.tagName === 'LABEL') {
+                  label.insertBefore(checkbox, label.firstChild);
+              }
+          });
+      });
+  </script>
+{% endblock %} 

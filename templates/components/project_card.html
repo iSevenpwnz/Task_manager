@@ -1,0 +1,35 @@
+<div class="card mb-3 project-card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="card-title mb-0">{{ project.name }}</h5>
+    <div class="d-flex align-items-center">
+      <small class="text-muted me-2">ID: {{ project.id }}</small>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-text">{{ project.description|truncatechars:100 }}</p>
+
+    <div class="project-stats">
+      <div class="row">
+        <div class="col-md-4">
+          <small class="text-muted">Всего задач: </small>
+          <span class="badge bg-secondary">{{ project.tasks.count }}</span>
+        </div>
+        <div class="col-md-4">
+          <small class="text-muted">В процессе: </small>
+          <span class="badge bg-primary">{{ project.tasks.filter(status='in_progress').count }}</span>
+        </div>
+        <div class="col-md-4">
+          <small class="text-muted">Завершено: </small>
+          <span class="badge bg-success">{{ project.tasks.filter(status='done').count }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if show_actions|default:True %}
+    <div class="card-footer d-flex justify-content-end">
+      <a href="{% url 'project_detail' project.id %}" class="btn btn-sm btn-outline-primary">Просмотр</a>
+      <a href="{% url 'project_update' project.id %}" class="btn btn-sm btn-outline-secondary ms-2">Редактировать</a>
+    </div>
+  {% endif %}
+</div>

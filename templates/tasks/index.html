@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Головна сторінка{% endblock %}
+
+{% block page_title %}Система управління завданнями{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h5 class="card-title mb-0">Загальна статистика</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="card text-center h-100">
+                <div class="card-body">
+                  <i class="fas fa-users fa-3x mb-3 text-primary"></i>
+                  <h5 class="card-title">Користувачі</h5>
+                  <p class="card-text display-4">{{ num_users }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="card text-center h-100">
+                <div class="card-body">
+                  <i class="fas fa-project-diagram fa-3x mb-3 text-success"></i>
+                  <h5 class="card-title">Проекти</h5>
+                  <p class="card-text display-4">{{ num_projects }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="card text-center h-100">
+                <div class="card-body">
+                  <i class="fas fa-tasks fa-3x mb-3 text-info"></i>
+                  <h5 class="card-title">Завдання</h5>
+                  <p class="card-text display-4">{{ num_tasks }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6 mb-3">
+              <div class="card text-center h-100">
+                <div class="card-body">
+                  <i class="fas fa-user-friends fa-3x mb-3 text-warning"></i>
+                  <h5 class="card-title">Команди</h5>
+                  <p class="card-text display-4">{{ num_teams }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="card text-center h-100">
+                <div class="card-body">
+                  <i class="fas fa-tags fa-3x mb-3 text-secondary"></i>
+                  <h5 class="card-title">Теги</h5>
+                  <p class="card-text display-4">{{ num_tags }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+          <h5 class="card-title mb-0">Завдання за статусом</h5>
+        </div>
+        <div class="card-body">
+          <div class="progress mb-3" style="height: 30px;">
+            <div class="progress-bar bg-warning" role="progressbar"
+                 style="width: {% widthratio tasks_by_status.to_do|default:0 num_tasks 100 %}%;" title="До виконання">
+              {{ tasks_by_status.to_do|default:0 }}
+            </div>
+            <div class="progress-bar bg-info" role="progressbar"
+                 style="width: {% widthratio tasks_by_status.in_progress|default:0 num_tasks 100 %}%;"
+                 title="В процесі">
+              {{ tasks_by_status.in_progress|default:0 }}
+            </div>
+            <div class="progress-bar bg-success" role="progressbar"
+                 style="width: {% widthratio tasks_by_status.done|default:0 num_tasks 100 %}%;" title="Виконано">
+              {{ tasks_by_status.done|default:0 }}
+            </div>
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><i class="fas fa-clock text-warning"></i> До виконання</span>
+              <span class="badge bg-warning rounded-pill">{{ tasks_by_status.to_do|default:0 }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><i class="fas fa-spinner text-info"></i> В процесі</span>
+              <span class="badge bg-info rounded-pill">{{ tasks_by_status.in_progress|default:0 }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><i class="fas fa-check text-success"></i> Виконано</span>
+              <span class="badge bg-success rounded-pill">{{ tasks_by_status.done|default:0 }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-success text-white">
+          <h5 class="card-title mb-0">Почати роботу</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-grid gap-2">
+            {% if user.is_authenticated %}
+              <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-tachometer-alt"></i> Перейти до дашборду
+              </a>
+              <a href="{% url 'task_create' %}" class="btn btn-success btn-lg">
+                <i class="fas fa-plus-circle"></i> Створити завдання
+              </a>
+            {% else %}
+              <a href="{% url 'login' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-sign-in-alt"></i> Увійти в систему
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if recent_tasks %}
+    <div class="card mt-4">
+      <div class="card-header bg-secondary text-white">
+        <h5 class="card-title mb-0">Останні додані завдання</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Назва</th>
+              <th>Статус</th>
+              <th>Проект</th>
+              <th>Виконавець</th>
+              <th>Додано</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for task in recent_tasks %}
+              <tr>
+                <td>
+                  {% if user.is_authenticated %}
+                    <a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a>
+                  {% else %}
+                    {{ task.title }}
+                  {% endif %}
+                </td>
+                <td>
+                            <span
+                                class="badge {% if task.status == 'to_do' %}bg-warning{% elif task.status == 'in_progress' %}bg-info{% else %}bg-success{% endif %}">
+                                {{ task.get_status_display }}
+                            </span>
+                </td>
+                <td>{% if task.project %}{{ task.project.name }}{% else %}-{% endif %}</td>
+                <td>{% if task.assigned_to %}{{ task.assigned_to.username }}{% else %}-{% endif %}</td>
+                <td>{{ task.created_at|date:"d.m.Y" }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %} 

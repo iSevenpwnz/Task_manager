@@ -1,0 +1,23 @@
+{% load task_tags %}
+
+<div class="deadline-indicator">
+  <small class="text-muted">Дедлайн: </small>
+
+  {% if deadline|is_overdue %}
+    <span class="badge bg-danger">
+            <i class="fas fa-exclamation-triangle"></i> Просрочен ({{ deadline|date:"d.m.Y H:i" }})
+        </span>
+  {% elif deadline|is_today %}
+    <span class="badge bg-warning">
+            <i class="fas fa-clock"></i> Сегодня ({{ deadline|date:"H:i" }})
+        </span>
+  {% elif deadline|is_tomorrow %}
+    <span class="badge bg-info">
+            <i class="fas fa-calendar-day"></i> Завтра ({{ deadline|date:"H:i" }})
+        </span>
+  {% else %}
+    <span class="badge bg-secondary">
+            <i class="fas fa-calendar"></i> {{ deadline|date:"d.m.Y H:i" }}
+        </span>
+  {% endif %}
+</div>

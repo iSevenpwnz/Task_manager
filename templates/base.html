@@ -1,0 +1,200 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Менеджер завдань{% endblock %}</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components.css' %}">
+
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <i class="fas fa-tasks me-2"></i>Менеджер завдань
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}">
+              <i class="fas fa-tachometer-alt me-1"></i>Дашборд
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-user-circle me-1"></i>{{ user.username }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <form method="post" action="{% url 'logout' %}" id="logout-form" class="d-inline">
+                  {% csrf_token %}
+                  <a class="dropdown-item" href="javascript:void(0)"
+                     onclick="document.getElementById('logout-form').submit();">
+                    <i class="fas fa-sign-out-alt me-2"></i>Вийти
+                  </a>
+                </form>
+              </li>
+            </ul>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt me-1"></i>Увійти</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}"><i class="fas fa-user-plus me-1"></i>Реєстрація</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container my-4">
+  <div class="row">
+    {% if user.is_authenticated %}
+      <div class="col-lg-3 col-md-4 mb-4">
+        <div class="sidebar">
+          <div class="sidebar-nav">
+            <h5 class="mb-3 text-muted"><i class="fas fa-compass me-2"></i>Навігація</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">
+                  <i class="fas fa-home"></i>Головна
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'task_list' %}">
+                  <i class="fas fa-tasks"></i>Всі завдання
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'my_tasks' %}">
+                  <i class="fas fa-clipboard-check"></i>Мої завдання
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'project_list' %}">
+                  <i class="fas fa-project-diagram"></i>Проекти
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'team_list' %}">
+                  <i class="fas fa-users"></i>Команди
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'tag_list' %}">
+                  <i class="fas fa-tags"></i>Теги
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-projects mb-4">
+            <h5 class="mb-3 text-muted"><i class="fas fa-folder me-2"></i>Мої проекти</h5>
+            <ul class="nav flex-column">
+              {% for project in user_projects %}
+                <li class="nav-item project-item">
+                  <a class="nav-link" href="{% url 'project_detail' project.pk %}">
+                    <i class="fas fa-folder-open"></i>{{ project.name }}
+                  </a>
+                </li>
+              {% empty %}
+                <li id="no-projects-message" class="text-muted small ps-3">Немає активних проектів</li>
+              {% endfor %}
+              <li class="mt-2">
+                <a href="{% url 'project_create' %}" class="btn btn-sm btn-outline-primary w-100">
+                  <i class="fas fa-plus me-1"></i>Додати проект
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-teams">
+            <h5 class="mb-3 text-muted"><i class="fas fa-user-friends me-2"></i>Мої команди</h5>
+            <ul class="nav flex-column">
+              {% for team in user_teams %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'team_detail' team.pk %}">
+                    <i class="fas fa-users"></i>{{ team.name }}
+                  </a>
+                </li>
+              {% empty %}
+                <li class="text-muted small ps-3">Ви не є членом жодної команди</li>
+              {% endfor %}
+              <li class="mt-2">
+                <a href="{% url 'team_create' %}" class="btn btn-sm btn-outline-primary w-100">
+                  <i class="fas fa-plus me-1"></i>Створити команду
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-9 col-md-8">
+        <div class="content-wrapper">
+          <h1 class="page-title">{% block page_title %}Менеджер завдань{% endblock %}</h1>
+
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+    {% else %}
+      <div class="col-12">
+        <div class="content-wrapper">
+          <h1 class="page-title">{% block page_title_no_auth %}{% endblock %}</h1>
+
+          {% block content_no_auth %}
+            {% block content_unauth %}{% endblock %}
+          {% endblock %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <p class="mb-0">© {% now "Y" %} Менеджер завдань</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="{% static 'js/main.js' %}"></script>
+
+{% block extra_js %}{% endblock %}
+</body>
+</html> 

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{% block list_title %}Список{% endblock %}{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <header class="mb-4">
+      <div class="d-flex justify-content-between align-items-center">
+        <h1>{% block list_heading %}Список{% endblock %}</h1>
+
+        <div class="actions">
+          {% block list_actions %}{% endblock %}
+        </div>
+      </div>
+
+      {% block breadcrumbs %}
+        {% include "components/breadcrumbs.html" %}
+      {% endblock %}
+    </header>
+    
+    <section class="filters mb-4">
+      {% block list_filters %}{% endblock %}
+    </section>
+    
+    <section class="list-content">
+      {% block list_content %}
+        <div class="alert alert-info">
+          Нет данных для отображения.
+        </div>
+      {% endblock %}
+    </section>
+    
+    <section class="pagination-container mt-4">
+      {% block pagination %}
+        {% if is_paginated %}
+          {% include "components/pagination.html" with page_obj=page_obj %}
+        {% endif %}
+      {% endblock %}
+    </section>
+  </div>
+{% endblock %}

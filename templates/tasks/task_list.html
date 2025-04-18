@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if tag %}Завдання з тегом "{{ tag.name }}"{% else %}Список завдань{% endif %}{% endblock %}
+
+{% block page_title %}
+  {% if tag %}
+    Завдання з тегом <span class="badge bg-secondary"><i class="fas fa-tag me-1"></i>{{ tag.name }}</span>
+  {% else %}
+    Список завдань
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="task-filter-panel mb-4">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <form method="get" id="searchForm" action="{% url 'task_list' %}" class="d-flex">
+          <div class="input-group">
+            <input type="text" name="search" class="form-control" value="{{ request.GET.search|default:'' }}"
+                   placeholder="Пошук завдань...">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+          {% if request.GET.status %}<input type="hidden" name="status" value="{{ request.GET.status }}">{% endif %}
+          {% if request.GET.assignee %}
+            <input type="hidden" name="assignee" value="{{ request.GET.assignee }}">{% endif %}
+          {% if request.GET.project %}<input type="hidden" name="project" value="{{ request.GET.project }}">{% endif %}
+          {% if request.GET.tag %}<input type="hidden" name="tag" value="{{ request.GET.tag }}">{% endif %}
+        </form>
+      </div>
+      <div class="col-md-6 mb-3 text-md-end">
+        <a href="{% url 'task_create' %}" class="btn btn-success">
+          <i class="fas fa-plus me-1"></i>Створити нове завдання
+        </a>
+      </div>
+    </div>
+    
+    <form method="get" action="{% url 'task_list' %}" id="filterForm">
+      {% if request.GET.search %}<input type="hidden" name="search" value="{{ request.GET.search }}">{% endif %}
+
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <select class="form-select" id="statusFilter" name="status">
+            <option value="" {% if not request.GET.status %}selected{% endif %}>Всі статуси</option>
+            <option value="to_do" {% if request.GET.status == 'to_do' %}selected{% endif %}>Нове</option>
+            <option value="in_progress" {% if request.GET.status == 'in_progress' %}selected{% endif %}>В процесі
+            </option>
+            <option value="done" {% if request.GET.status == 'done' %}selected{% endif %}>Виконано</option>
+          </select>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <select class="form-select" id="assigneeFilter" name="assignee">
+            <option value="" {% if not request.GET.assignee %}selected{% endif %}>Всі виконавці</option>
+            <option value="me" {% if request.GET.assignee == 'me' %}selected{% endif %}>Призначені мені</option>
+            <option value="none" {% if request.GET.assignee == 'none' %}selected{% endif %}>Без виконавця</option>
+          </select>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <select class="form-select" id="projectFilter" name="project">
+            <option value="" {% if not request.GET.project %}selected{% endif %}>Всі проекти</option>
+            {% for project in projects %}
+              <option value="{{ project.id }}"
+                      {% if request.GET.project == project.id|stringformat:"i" %}selected{% endif %}>{{ project.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <select class="form-select" id="tagFilter" name="tag">
+            <option value="" {% if not request.GET.tag %}selected{% endif %}>Всі теги</option>
+            {% for tag in tags %}
+              <option value="{{ tag.id }}"
+                      {% if request.GET.tag == tag.id|stringformat:"i" %}selected{% endif %}>{{ tag.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const selects = ['statusFilter', 'assigneeFilter', 'projectFilter', 'tagFilter'];
+          selects.forEach(function (id) {
+              const select = document.getElementById(id);
+              if (select) {
+                  select.addEventListener('change', function () {
+                      document.getElementById('filterForm').submit();
+                  });
+              }
+          });
+      });
+  </script>
+
+  {% if tasks %}
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-light">
+        <tr>
+          <th>Статус</th>
+          <th>Назва</th>
+          <th>Проект</th>
+          <th>Виконавець</th>
+          <th>Дедлайн</th>
+          <th>Теги</th>
+          <th>Дії</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+          <tr>
+            <td>
+                    <span
+                        class="badge rounded-pill {% if task.status == 'to_do' %}status-todo{% elif task.status == 'in_progress' %}status-in-progress{% elif task.status == 'done' %}status-done{% endif %}">
+                        {% if task.status == 'to_do' %}
+                          <i class="fas fa-hourglass-start me-1"></i>Нове
+                        {% elif task.status == 'in_progress' %}
+                          <i class="fas fa-spinner me-1"></i>В процесі
+                        {% elif task.status == 'done' %}
+                          <i class="fas fa-check me-1"></i>Виконано
+                        {% endif %}
+                    </span>
+              {% if task.is_overdue %}
+                <span class="badge rounded-pill status-overdue ms-1">
+                        <i class="fas fa-exclamation-triangle me-1"></i>Прострочено
+                    </span>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{% url 'task_detail' task.id %}" class="fw-semibold text-decoration-none">{{ task.title }}</a>
+            </td>
+            <td>
+              {% if task.project %}
+                <a href="{% url 'project_detail' task.project.id %}" class="text-decoration-none">
+                  <i class="fas fa-folder me-1"></i>{{ task.project.name }}
+                </a>
+              {% else %}
+                <span class="text-muted"><i class="fas fa-minus"></i></span>
+              {% endif %}
+            </td>
+            <td>
+              {% if task.assigned_to %}
+                <div class="d-flex align-items-center">
+                  <div
+                      class="avatar-circle bg-primary me-2 d-flex align-items-center justify-content-center user-avatar">
+                    {{ task.assigned_to.username|first|upper }}
+                  </div>
+                  <span>{{ task.assigned_to.username }}</span>
+                </div>
+              {% else %}
+                <span class="text-muted"><i class="fas fa-user-slash"></i> Не призначено</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if task.deadline %}
+                <span class="{% if task.is_overdue %}text-danger fw-bold{% endif %}">
+                        <i class="far fa-calendar-alt me-1"></i>{{ task.deadline|date:"d.m.Y" }}
+                    </span>
+              {% else %}
+                <span class="text-muted"><i class="fas fa-minus"></i></span>
+              {% endif %}
+            </td>
+            <td>
+              {% for tag in task.tags.all %}
+                <span class="tag">{{ tag.name }}</span>
+              {% empty %}
+                <span class="text-muted"><i class="fas fa-minus"></i></span>
+              {% endfor %}
+            </td>
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                        data-bs-toggle="dropdown">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="{% url 'task_detail' task.id %}"><i class="fas fa-eye me-2"></i>Переглянути</a>
+                  </li>
+                  <li><a class="dropdown-item" href="{% url 'task_update' task.id %}"><i class="fas fa-edit me-2"></i>Редагувати</a>
+                  </li>
+                  {% if task.status != 'done' %}
+                    <li><a class="dropdown-item" href="{% url 'task_quick_update' task.id %}?status=done"><i
+                        class="fas fa-check me-2"></i>Позначити як виконане</a></li>
+                  {% else %}
+                    <li><a class="dropdown-item" href="{% url 'task_quick_update' task.id %}?status=in_progress"><i
+                        class="fas fa-undo me-2"></i>Повернути в роботу</a></li>
+                  {% endif %}
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item text-danger" href="{% url 'task_delete' task.id %}"><i
+                      class="fas fa-trash-alt me-2"></i>Видалити</a></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% if is_paginated %}
+      <nav aria-label="Навігація сторінками">
+        <ul class="pagination justify-content-center">
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page=1
+                  {% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                <i class="fas fa-angle-double-left"></i>
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page=
+                  {{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                <i class="fas fa-angle-left"></i>
+              </a>
+            </li>
+          {% endif %}
+
+          {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+              <li class="page-item">
+                <a class="page-link" href="?page=
+                    {{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">{{ num }}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page=
+                  {{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                <i class="fas fa-angle-right"></i>
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page=
+                  {{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                <i class="fas fa-angle-double-right"></i>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+
+  {% else %}
+    <div class="alert alert-info d-flex align-items-center">
+      <i class="fas fa-info-circle me-3 fa-2x"></i>
+      <div>
+        <h5 class="mb-1">Завдань не знайдено</h5>
+        <p class="mb-0">Наразі немає жодних завдань з вказаними параметрами фільтрації.</p>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <a href="{% url 'task_create' %}" class="btn btn-primary">
+        <i class="fas fa-plus me-1"></i>Створити нове завдання
+      </a>
+    </div>
+  {% endif %}
+{% endblock %} 

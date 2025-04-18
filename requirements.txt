@@ -1,0 +1,11 @@
+asgiref==3.8.1
+Django==5.2
+pillow==11.2.1
+sqlparse==0.5.3
+tzdata==2025.2
+dj-database-url==2.1.0
+python-dotenv==1.0.1
+gunicorn==21.2.0
+# Use psycopg2 on Windows, psycopg2-binary will be used on render.com
+psycopg2==2.9.9; platform_system=='Windows'
+psycopg2-binary==2.9.9; platform_system!='Windows'

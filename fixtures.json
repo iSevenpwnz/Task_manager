@@ -1,0 +1,508 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$NmDTvxYYlOiAxQ9Y6T3lXB$GKyc0A0dlH2XSaTd0bJJfO/OXUQ2OEWQ0TJ95VW+E60=",
+      "last_login": "2023-10-28T15:45:10.000Z",
+      "is_superuser": true,
+      "username": "admin_fixture",
+      "first_name": "Адміністратор",
+      "last_name": "Системи",
+      "email": "admin_fixture@example.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2023-09-20T10:00:00.000Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$rAuPc5TCLiBaWMOw1PQuB9$xk2g1y86u8DFyAL9yGQUMh9jFKYLYcGXZGvyfAljh9E=",
+      "last_login": "2023-10-27T14:32:12.000Z",
+      "is_superuser": false,
+      "username": "oleks_pm_fixture",
+      "first_name": "Олександр",
+      "last_name": "Петренко",
+      "email": "oleksandr.petrenko@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-09-21T09:15:00.000Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$0PJksXNSQb5Qm8Nz5pAcDV$3Jy4jk0rDjkLm6IXBiAqZHzF9A7Ow6U7n9oJI1nVlHk=",
+      "last_login": "2023-10-28T09:12:45.000Z",
+      "is_superuser": false,
+      "username": "irynadev_fixture",
+      "first_name": "Ірина",
+      "last_name": "Ковальчук",
+      "email": "iryna.kovalchuk@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-09-22T11:20:00.000Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$IbMPr6UqQXWb9oF3JRnK2s$q2V5kQEy3fVQ5AEPG8nJGJUfPUJJ5LhKGjF4zcCfPWA=",
+      "last_login": "2023-10-27T16:45:30.000Z",
+      "is_superuser": false,
+      "username": "mykola_design_fixture",
+      "first_name": "Микола",
+      "last_name": "Шевченко",
+      "email": "mykola.shevchenko@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-09-23T14:30:00.000Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$ZXw3k8LpqYJtcQv9AsDn5E$XJfLrJ0NVVW6czfBYUIcG4LtgWQn5BK2EG1Ot3kC9f4=",
+      "last_login": "2023-10-26T10:25:18.000Z",
+      "is_superuser": false,
+      "username": "tetiana_qa_fixture",
+      "first_name": "Тетяна",
+      "last_name": "Мельник",
+      "email": "tetiana.melnyk@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-09-24T08:40:00.000Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$fPvW5YuS2qKaGxBh7HzJt3$5UgJoHI4NQUzKLj9lrx5nD9hSzVzKjGtAoJeNc4Cyvs=",
+      "last_login": "2023-10-28T12:15:40.000Z",
+      "is_superuser": false,
+      "username": "andriy_dev_fixture",
+      "first_name": "Андрій",
+      "last_name": "Коваленко",
+      "email": "andriy.kovalenko@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-09-25T16:55:00.000Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "tasks.tag",
+    "pk": 1,
+    "fields": {
+      "name": "Високий пріоритет"
+    }
+  },
+  {
+    "model": "tasks.tag",
+    "pk": 2,
+    "fields": {
+      "name": "Середній пріоритет"
+    }
+  },
+  {
+    "model": "tasks.tag",
+    "pk": 3,
+    "fields": {
+      "name": "Низький пріоритет"
+    }
+  },
+  {
+    "model": "tasks.tag",
+    "pk": 4,
+    "fields": {
+      "name": "Frontend"
+    }
+  },
+  {
+    "model": "tasks.tag",
+    "pk": 5,
+    "fields": {
+      "name": "Backend"
+    }
+  },
+  {
+    "model": "tasks.tag",
+    "pk": 6,
+    "fields": {
+      "name": "UI/UX"
+    }
+  },
+  {
+    "model": "tasks.tag",
+    "pk": 7,
+    "fields": {
+      "name": "Баг"
+    }
+  },
+  {
+    "model": "tasks.tag",
+    "pk": 8,
+    "fields": {
+      "name": "Фіча"
+    }
+  },
+  {
+    "model": "tasks.tag",
+    "pk": 9,
+    "fields": {
+      "name": "Документація"
+    }
+  },
+  {
+    "model": "tasks.tag",
+    "pk": 10,
+    "fields": {
+      "name": "Тестування"
+    }
+  },
+  {
+    "model": "tasks.project",
+    "pk": 1,
+    "fields": {
+      "name": "Rozetka 2.0",
+      "description": "Оновлення найбільшого в Україні маркетплейсу електроніки та товарів для дому. Проект включає редизайн головної сторінки, оптимізацію швидкості сайту та розробку нового особистого кабінету користувача.",
+      "created_at": "2023-09-20T12:10:00.000Z",
+      "updated_at": "2023-10-25T15:20:00.000Z"
+    }
+  },
+  {
+    "model": "tasks.project",
+    "pk": 2,
+    "fields": {
+      "name": "Дія.Освіта",
+      "description": "Створення освітньої платформи для підвищення цифрової грамотності українців. Проект у співпраці з Міністерством цифрової трансформації України включає онлайн-курси з цифрових навичок та сертифікацію.",
+      "created_at": "2023-09-25T14:30:00.000Z",
+      "updated_at": "2023-10-26T09:15:00.000Z"
+    }
+  },
+  {
+    "model": "tasks.project",
+    "pk": 3,
+    "fields": {
+      "name": "Нова Пошта Трекер",
+      "description": "Мобільний додаток для відстеження посилок Нової Пошти з можливістю сканування штрих-кодів, отримання push-сповіщень про статус доставки та оплати послуг онлайн.",
+      "created_at": "2023-10-01T09:45:00.000Z",
+      "updated_at": "2023-10-27T11:30:00.000Z"
+    }
+  },
+  {
+    "model": "tasks.project",
+    "pk": 4,
+    "fields": {
+      "name": "Mono Business",
+      "description": "Розробка веб-панелі для бізнес-клієнтів monobank з розширеною аналітикою, управлінням корпоративними картками та інтеграцією з системами бухгалтерського обліку.",
+      "created_at": "2023-10-10T08:20:00.000Z",
+      "updated_at": "2023-10-28T10:45:00.000Z"
+    }
+  },
+  {
+    "model": "tasks.team",
+    "pk": 1,
+    "fields": {
+      "name": "Київське відділення розробки",
+      "description": "Основний підрозділ розробки, що працює над ключовими проектами компанії в офісі Києва.",
+      "created_at": "2023-09-20T13:00:00.000Z",
+      "updated_at": "2023-10-25T16:15:00.000Z",
+      "members": [2, 3, 6],
+      "projects": [1, 3]
+    }
+  },
+  {
+    "model": "tasks.team",
+    "pk": 2,
+    "fields": {
+      "name": "Львівська дизайн-студія",
+      "description": "Креативна команда дизайнерів зі Львова, що спеціалізується на створенні сучасних інтерфейсів з українською айдентикою.",
+      "created_at": "2023-09-22T11:30:00.000Z",
+      "updated_at": "2023-10-26T14:20:00.000Z",
+      "members": [4, 5],
+      "projects": [1, 2, 4]
+    }
+  },
+  {
+    "model": "tasks.team",
+    "pk": 3,
+    "fields": {
+      "name": "QA відділ",
+      "description": "Команда забезпечення якості, що працює над тестуванням усіх проектів компанії та впровадженням автоматизованих тестів.",
+      "created_at": "2023-09-23T15:45:00.000Z",
+      "updated_at": "2023-10-27T13:10:00.000Z",
+      "members": [5, 2],
+      "projects": [1, 2, 3, 4]
+    }
+  },
+  {
+    "model": "tasks.team",
+    "pk": 4,
+    "fields": {
+      "name": "Mobile Squad",
+      "description": "Команда розробників мобільних додатків для iOS та Android, що працює в гібридному форматі з різних міст України.",
+      "created_at": "2023-09-25T10:20:00.000Z",
+      "updated_at": "2023-10-28T11:45:00.000Z",
+      "members": [3, 6],
+      "projects": [2]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 1,
+    "fields": {
+      "title": "Інтеграція Приват24 API",
+      "description": "Розробити модуль інтеграції з API ПриватБанку для автоматичних платежів. Необхідно реалізувати функції ініціації платежу, перевірки статусу та отримання виписки по транзакціях. API документація: https://api.privatbank.ua/",
+      "status": "done",
+      "created_by": 2,
+      "assigned_to": 3,
+      "project": 1,
+      "deadline": "2023-10-05T17:00:00.000Z",
+      "created_at": "2023-09-22T09:30:00.000Z",
+      "updated_at": "2023-10-05T15:45:00.000Z",
+      "tags": [5, 1, 8]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 2,
+    "fields": {
+      "title": "Оптимізація завантаження каталогу товарів",
+      "description": "Оптимізувати швидкість завантаження сторінки каталогу товарів Rozetka. Поточний час завантаження - 3.5 секунди, ціль - менше 1.5 секунди. Реалізувати ліниве завантаження зображень, віртуальний скролінг та кешування даних.",
+      "status": "in_progress",
+      "created_by": 2,
+      "assigned_to": 6,
+      "project": 1,
+      "deadline": "2023-10-30T17:00:00.000Z",
+      "created_at": "2023-09-25T11:20:00.000Z",
+      "updated_at": "2023-10-15T14:30:00.000Z",
+      "tags": [4, 1, 8]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 3,
+    "fields": {
+      "title": "Дизайн онбордингу для Дія.Освіта",
+      "description": "Розробити UI/UX дизайн для процесу онбордингу нових користувачів на платформі Дія.Освіта. Створити інтерактивні екрани, що пояснюють основні функції платформи та мотивують користувачів розпочати навчання.",
+      "status": "done",
+      "created_by": 2,
+      "assigned_to": 4,
+      "project": 2,
+      "deadline": "2023-10-10T15:00:00.000Z",
+      "created_at": "2023-09-26T10:45:00.000Z",
+      "updated_at": "2023-10-09T16:20:00.000Z",
+      "tags": [6, 2]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 4,
+    "fields": {
+      "title": "Інтеграція з API Нової Пошти",
+      "description": "Розробити модуль для взаємодії з API Нової Пошти v2.0. Реалізувати функції пошуку відділень на карті, розрахунку вартості доставки, створення експрес-накладних та трекінгу відправлень. Документація API: https://developers.novaposhta.ua/",
+      "status": "in_progress",
+      "created_by": 2,
+      "assigned_to": 3,
+      "project": 3,
+      "deadline": "2023-11-05T17:00:00.000Z",
+      "created_at": "2023-10-01T09:15:00.000Z",
+      "updated_at": "2023-10-20T14:10:00.000Z",
+      "tags": [5, 1, 8]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 5,
+    "fields": {
+      "title": "Інтеграція Google Pay та Apple Pay",
+      "description": "Інтегрувати системи безконтактних платежів Google Pay та Apple Pay у додаток Нова Пошта Трекер для швидкої оплати послуг доставки. Реалізувати збереження платіжних карток та швидкий вибір способу оплати.",
+      "status": "to_do",
+      "created_by": 2,
+      "assigned_to": 6,
+      "project": 3,
+      "deadline": "2023-11-10T16:00:00.000Z",
+      "created_at": "2023-10-05T11:30:00.000Z",
+      "updated_at": "2023-10-05T11:30:00.000Z",
+      "tags": [5, 2, 8]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 6,
+    "fields": {
+      "title": "Тестування безпеки Mono Business",
+      "description": "Провести комплексне тестування безпеки платформи Mono Business. Виконати сканування вразливостей, тестування на проникнення (pentest) та аудит коду критичних компонентів системи. Підготувати звіт з рекомендаціями щодо усунення виявлених вразливостей.",
+      "status": "to_do",
+      "created_by": 2,
+      "assigned_to": 5,
+      "project": 4,
+      "deadline": "2023-11-02T15:00:00.000Z",
+      "created_at": "2023-10-15T10:20:00.000Z",
+      "updated_at": "2023-10-15T10:20:00.000Z",
+      "tags": [10, 1]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 7,
+    "fields": {
+      "title": "Дизайн дашборду Mono Business",
+      "description": "Розробити сучасний та інформативний дашборд для бізнес-клієнтів monobank. Дизайн має включати віджети з ключовими метриками, графіки руху коштів, статистику по операціях та інтерактивні елементи для управління фінансами компанії.",
+      "status": "in_progress",
+      "created_by": 3,
+      "assigned_to": 4,
+      "project": 4,
+      "deadline": "2023-10-31T12:00:00.000Z",
+      "created_at": "2023-10-20T09:45:00.000Z",
+      "updated_at": "2023-10-20T09:45:00.000Z",
+      "tags": [6, 1, 8]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 8,
+    "fields": {
+      "title": "Розробка інтерактивних тестів для Дія.Освіта",
+      "description": "Створити систему інтерактивних тестів для оцінки знань користувачів платформи Дія.Освіта. Реалізувати різні типи питань (з одним або кількома варіантами відповідей, на встановлення відповідності), автоматичну перевірку та видачу сертифікатів при успішному проходженні.",
+      "status": "to_do",
+      "created_by": 2,
+      "assigned_to": 3,
+      "project": 2,
+      "deadline": "2023-11-20T17:00:00.000Z",
+      "created_at": "2023-10-15T14:30:00.000Z",
+      "updated_at": "2023-10-15T14:30:00.000Z",
+      "tags": [4, 5, 8, 1]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 9,
+    "fields": {
+      "title": "Впровадження авторизації через BankID",
+      "description": "Інтегрувати систему авторизації BankID в платформу Mono Business для верифікації юридичних осіб. Реалізувати процес створення облікового запису бізнес-клієнта з використанням ЕЦП та автоматичною перевіркою даних через ЄДР.",
+      "status": "in_progress",
+      "created_by": 2,
+      "assigned_to": 6,
+      "project": 4,
+      "deadline": "2023-11-05T16:00:00.000Z",
+      "created_at": "2023-10-12T11:15:00.000Z",
+      "updated_at": "2023-10-20T09:30:00.000Z",
+      "tags": [5, 1]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 10,
+    "fields": {
+      "title": "Створення API-документації для Дія.Освіта",
+      "description": "Розробити OpenAPI (Swagger) документацію для REST API платформи Дія.Освіта. Описати всі ендпоінти, методи, параметри запитів та відповідей. Створити інтерактивну версію документації для спрощення інтеграції зовнішніх сервісів.",
+      "status": "in_progress",
+      "created_by": 3,
+      "assigned_to": 2,
+      "project": 2,
+      "deadline": "2023-11-10T17:00:00.000Z",
+      "created_at": "2023-10-18T10:45:00.000Z",
+      "updated_at": "2023-10-25T11:20:00.000Z",
+      "tags": [9, 3]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 11,
+    "fields": {
+      "title": "Оптимізація пошуку на Rozetka",
+      "description": "Оптимізувати алгоритм пошуку товарів на сайті Rozetka. Впровадити релевантне ранжування результатів з урахуванням популярності товарів, відгуків користувачів та історії переглядів. Інтегрувати автодоповнення пошукових запитів та виправлення помилок введення.",
+      "status": "to_do",
+      "created_by": 2,
+      "assigned_to": 3,
+      "project": 1,
+      "deadline": "2023-11-15T16:00:00.000Z",
+      "created_at": "2023-10-22T09:30:00.000Z",
+      "updated_at": "2023-10-22T09:30:00.000Z",
+      "tags": [4, 5, 2]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 12,
+    "fields": {
+      "title": "Інтеграція з 1С для Mono Business",
+      "description": "Розробити модуль синхронізації даних між Mono Business та 1С:Підприємство. Реалізувати автоматичний імпорт транзакцій, експорт платежів та синхронізацію довідників контрагентів. Забезпечити двосторонній обмін даними через захищений канал.",
+      "status": "done",
+      "created_by": 2,
+      "assigned_to": 6,
+      "project": 4,
+      "deadline": "2023-10-25T15:00:00.000Z",
+      "created_at": "2023-10-10T14:20:00.000Z",
+      "updated_at": "2023-10-24T16:45:00.000Z",
+      "tags": [5, 8, 1]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 13,
+    "fields": {
+      "title": "Реалізація push-сповіщень у додатку Нова Пошта",
+      "description": "Впровадити систему push-сповіщень для мобільного додатку Нова Пошта Трекер. Налаштувати сповіщення про зміну статусу відправлення, прибуття посилки, необхідність оплати та наближення кінця терміну зберігання. Інтегрувати Firebase Cloud Messaging для Android та APNS для iOS.",
+      "status": "done",
+      "created_by": 3,
+      "assigned_to": 6,
+      "project": 3,
+      "deadline": "2023-10-20T17:00:00.000Z",
+      "created_at": "2023-10-05T13:40:00.000Z",
+      "updated_at": "2023-10-19T15:30:00.000Z",
+      "tags": [5, 8, 3]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 14,
+    "fields": {
+      "title": "Оптимізація роботи з Google Maps на Rozetka",
+      "description": "Оптимізувати роботу з Google Maps API на сторінках пунктів видачі Rozetka. Реалізувати кластеризацію міток на карті, кешування геоданих, предзавантаження карт для популярних локацій та оптимізувати використання квоти запитів до API.",
+      "status": "to_do",
+      "created_by": 2,
+      "assigned_to": 3,
+      "project": 1,
+      "deadline": "2023-11-15T17:00:00.000Z",
+      "created_at": "2023-10-25T11:15:00.000Z",
+      "updated_at": "2023-10-25T11:15:00.000Z",
+      "tags": [4, 1]
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 15,
+    "fields": {
+      "title": "Розробка аналітичного модуля для Дія.Освіта",
+      "description": "Створити аналітичний модуль для адміністраторів платформи Дія.Освіта. Реалізувати дашборд з ключовими метриками (кількість активних користувачів, завершення курсів, середні оцінки), можливість генерації звітів та експорту даних у різних форматах (PDF, Excel, CSV).",
+      "status": "in_progress",
+      "created_by": 2,
+      "assigned_to": 3,
+      "project": 2,
+      "deadline": "2023-11-20T16:00:00.000Z",
+      "created_at": "2023-10-15T10:30:00.000Z",
+      "updated_at": "2023-10-26T14:20:00.000Z",
+      "tags": [5, 8, 1]
+    }
+  }
+] 
