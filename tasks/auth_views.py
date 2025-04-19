@@ -59,7 +59,16 @@ class RegisterView(View):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-
+            
+            # Автоматично авторизуємо користувача
+            login(request, user)
+            
+            # Перенаправляємо на домашню сторінку
+            messages.success(request, f"Вітаємо, {user.username}! Реєстрація успішна.")
+            return redirect('dashboard')
+            
+            # Закоментований код із відправкою email, який спричиняє 500 помилку
+            """
             email = form.cleaned_data.get('email')
             code = VerificationCode.generate_code()
             verification = VerificationCode.objects.create(
@@ -88,6 +97,7 @@ class RegisterView(View):
 
             messages.success(request, "Реєстрація успішна! Увійдіть, використовуючи ваші облікові дані.")
             return redirect('login')
+            """
         return render(request, self.template_name, {'form': form})
 
 
