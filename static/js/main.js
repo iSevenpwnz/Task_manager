@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Ініціалізація компонентів
     initTooltips();
     initDatePickers();
-    initDropdowns();
+    //initDropdowns(); // Закоментовано, щоб не конфліктувало з Bootstrap
     setupFormValidation();
     setupNotifications();
 
@@ -127,6 +127,8 @@ function initDatePickers() {
 }
 
 // Ініціалізація випадаючих меню
+// Закоментована функція, щоб дозволити Bootstrap самостійно керувати випадаючими меню
+/*
 function initDropdowns() {
     const dropdowns = document.querySelectorAll('.dropdown-toggle');
     
@@ -148,6 +150,7 @@ function initDropdowns() {
         });
     });
 }
+*/
 
 // Валідація форм
 function setupFormValidation() {

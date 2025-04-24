@@ -8,5 +8,4 @@ python-dotenv==1.0.1
 gunicorn==21.2.0
 whitenoise==6.6.0
 # Use psycopg2 on Windows, psycopg2-binary will be used on render.com
-psycopg2==2.9.9; platform_system=='Windows'
-psycopg2-binary==2.9.9; platform_system!='Windows'
+psycopg2-binary==2.9.10

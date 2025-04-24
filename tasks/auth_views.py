@@ -13,22 +13,22 @@ from .forms import RegisterForm, VerificationForm
 
 
 class LoginView(View):
-    template_name = 'tasks/auth/login.html'
+    template_name = "tasks/auth/login.html"
 
     def get(self, request):
         if request.user.is_authenticated:
-            return redirect('dashboard')
+            return redirect("dashboard")
         return render(request, self.template_name)
 
     def post(self, request):
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST.get("username")
+        password = request.POST.get("password")
 
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
-            next_url = request.GET.get('next', 'dashboard')
+            next_url = request.GET.get("next", "dashboard")
             messages.success(request, f"Вітаємо, {user.username}!")
             return redirect(next_url)
         else:
@@ -38,35 +38,39 @@ class LoginView(View):
 
 class LogoutView(LoginRequiredMixin, View):
     def get(self, request):
-        return redirect('login')
+        logout(request)
+        messages.info(request, "Ви вийшли з системи")
+        return redirect("login")
 
     def post(self, request):
         logout(request)
         messages.info(request, "Ви вийшли з системи")
-        return redirect('login')
+        return redirect("login")
 
 
 class RegisterView(View):
-    template_name = 'tasks/auth/register.html'
+    template_name = "tasks/auth/register.html"
 
     def get(self, request):
         if request.user.is_authenticated:
-            return redirect('dashboard')
+            return redirect("dashboard")
         form = RegisterForm()
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {"form": form})
 
     def post(self, request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            
+
             # Автоматично авторизуємо користувача
             login(request, user)
-            
+
             # Перенаправляємо на домашню сторінку
-            messages.success(request, f"Вітаємо, {user.username}! Реєстрація успішна.")
-            return redirect('dashboard')
-            
+            messages.success(
+                request, f"Вітаємо, {user.username}! Реєстрація успішна."
+            )
+            return redirect("dashboard")
+
             # Закоментований код із відправкою email, який спричиняє 500 помилку
             """
             email = form.cleaned_data.get('email')
@@ -98,19 +102,19 @@ class RegisterView(View):
             messages.success(request, "Реєстрація успішна! Увійдіть, використовуючи ваші облікові дані.")
             return redirect('login')
             """
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {"form": form})
 
 
 class VerifyCodeView(View):
-    template_name = 'tasks/auth/verify_code.html'
+    template_name = "tasks/auth/verify_code.html"
 
     def get(self, request):
         form = VerificationForm()
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {"form": form})
 
     def post(self, request):
         form = VerificationForm(request.POST)
         if form.is_valid():
-            code = form.cleaned_data.get('code')
-            return redirect('login')
-        return render(request, self.template_name, {'form': form})
+            code = form.cleaned_data.get("code")
+            return redirect("login")
+        return render(request, self.template_name, {"form": form})
